@@ -6,10 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
   } else {
     // Receber os dados do formulário
-    $nome = htmlspecialchars($_POST['inputname']);
-    $funcao = $_POST['inputfuncao'];
+    $name = htmlspecialchars($_POST['inputname']);
+    $user_function = $_POST['inputfunction'];
     $user_email = filter_var($_POST['inputemail'], FILTER_VALIDATE_EMAIL);
-    $phone = $_POST['inputnumber'];
+    $application = $_POST['inputapplication'];
+    $user_phone = $_POST['inputnumber'];
     $username = $_POST['inputusername'];
     $institution = $_POST['inputuni'];
     $category = $_POST['inputcategory'];
@@ -30,15 +31,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $project_financer = $_POST['inputfinancer'];
 
     // Validar os dados
-    if ($email && !empty($nome) && !empty($mensagem) && strlen($mensagem) <= 500) {
-      if (!preg_match("/^[a-zA-Z\s]+$/", $nome)) {
+    if ($user_email && !empty($name) && !empty($project_description) && strlen($project_description) <= 500) {
+      if (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
         echo "Erro: Nome inválido!";
       }
-      $nome = trim($nome);
-      $mensagem = trim($mensagem);
+      $name = trim($name);
+      $project_description = trim($project_description);
       
       $arquivo = fopen("mensagens.txt", "a");
-      fwrite($arquivo, "Nome: $nome\nEmail: $email\nMensagem: $mensagem\n\n");
+      fwrite($arquivo, "Nome: $name\nFunção: $user_function\n Email: $user_email\nAplicação: $application\nTelefone: $user_phone\nUsername:$username\nInstituição: $institution\nCategoria: $category\nDepartamento: $department\nEndereço Universidade: $address_uni\nCód. postal: $zip_code\nCidade: $city\nEstado: $state\nPaís: $country\nTítulo projeto: $project_title\nÁrea do projeto: $project_field\nCoordenador do projeto: $project_coordinator\nLattes id: $lattes\n Email do coodernador: $coordinator_email\nDescrição resumida: $project_description\nArquivo: $project_file\nPalavras-chave: $key_words\nFinanciador: $project_financer \n\n");
       fclose($arquivo);
 
       echo "Mensagem enviada com sucesso!";
